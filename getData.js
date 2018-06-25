@@ -141,15 +141,16 @@ async function getAdBaseData(arr) {
     }
 }
 
+
+
 async function main() {
     await getAdData(arr);
     await getAdCareerData(arr);
     await getAdPurposeData(arr);
     await getAdTypeData(arr);
     await getAdBaseData(arr);
-    writeToFile(arr);
+    await writeToFile(arr);
     return arr;
 }
-
 
 module.exports = main;
