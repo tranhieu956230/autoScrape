@@ -1,8 +1,8 @@
 const env = {
     user: 'mkorhwfaxprrc57p',
     password: 'd5oaflsk0tvdzux9',
-    database: 'heroku_2b35d7858d01da0',
-    host: 'us-east-1.rds.amazonaws.com',
+    database: 'xiwpu13785zg8ak5',
+    host: 'jsftj8ez0cevjz8v.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
     dialect: 'mysql',
     pool: {
         max: 5,
