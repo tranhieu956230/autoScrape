@@ -1,6 +1,6 @@
 module.exports = (sequelize, Sequelize) => {
     const AdBase = sequelize.define('adbase', {
-        adId: {
+        ad_id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
             primaryKey: true,

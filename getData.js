@@ -29,6 +29,12 @@ function getData(adPage, adCareer, adPurpose, adType, adBase) {
     })
 }
 
+function findById(id, arr) {
+    for (let i = 0; i < arr.length; i++) {
+        if (id == arr[i].id) return i;
+    }
+    return -1;
+}
 function writeToFile(data) {
     return new Promise((resolve, reject) => {
         fs.writeFile('out.json', JSON.stringify(data), function (err) {
@@ -37,91 +43,103 @@ function writeToFile(data) {
         })
     })
 }
-
-async function getAdData(arr) {
-    var id = 1;
-    do {
-        var response = await getData(id, 0, 0, 0, 0);
-        for (let i = 0; i < response.items.length; i++) {
-            arr.push(response.items[i]);
-        }
-        console.log(id);
-        id++;
-    } while (response.items.length != 0);
-}
-
-function modifyItem(type, typeID, id, arr) {
-    for (let i = 0; i < arr.length; i++) {
-        if (arr[i].id == id) {
-            switch (type) {
-                case "adCareer":
-                    arr[i] = Object.assign(arr[i], {
-                        adCareer: typeID
-                    })
-                    break;
-                case "adPurpose":
-                    arr[i] = Object.assign(arr[i], {
-                        adPurpose: typeID
-                    })
-                    break;
-                case "adType":
-                    arr[i] = Object.assign(arr[i], {
-                        adType: typeID
-                    })
-                    break;
-                case "adBase":
-                    arr[i] = Object.assign(arr[i], {
-                        adBase: typeID
-                    })
-                    break;
-            }
-        }
-    }
+function readFromFile() {
+    return new Promise((resolve, reject) => {
+        fs.readFile('out.json', (err, data) => {
+            if (err) reject(err);
+            resolve(JSON.parse(data));
+        })
+    })
 }
 
 async function getAdCareerData(arr) {
     var adcareers = [3, 8, 10, 22, 9, 23, 10, 14, 15, 31, 18, 19, 24];
     for (let j = 0; j < adcareers.length; j++) {
         var id = 1;
-        do {
+        while (1) {
             var response = await getData(id, adcareers[j], 0, 0, 0);
+            if (response.items.length == 0) break;
             for (let i = 0; i < response.items.length; i++) {
-                modifyItem("adCareer", adcareers[j], response.items[i].id, arr);
+                var tmp = response.items[i];
+                tmp = Object.assign(tmp, {
+                    adCareer: [],
+                    adPurpose: [],
+                    adType: [],
+                    adBase: [],
+                })
+                var index = findById(tmp.id, arr);
+                if (index == -1) {
+                    tmp.adCareer.push(adcareers[j]);
+                    arr.push(tmp);
+                }
+                else {
+                    if (arr[index].adCareer.indexOf(adcareers[j]) == -1) arr[index].adCareer.push(adcareers[j]);
+                }
             }
             console.log('adCareer', id);
             id++;
 
-        } while (response.items.length != 0);
+        }
     }
 }
 async function getAdPurposeData(arr) {
     var adpurposes = [4, 11, 12];
     for (let j = 0; j < adpurposes.length; j++) {
         var id = 1;
-        do {
+        while (1) {
             var response = await getData(id, 0, adpurposes[j], 0, 0);
+            if (response.items.length == 0) break;
             for (let i = 0; i < response.items.length; i++) {
-                modifyItem("adPurpose", adpurposes[j], response.items[i].id, arr);
+                var tmp = response.items[i];
+                tmp = Object.assign(tmp, {
+                    adCareer: [],
+                    adPurpose: [],
+                    adType: [],
+                    adBase: [],
+                })
+                var index = findById(tmp.id, arr);
+                if (index == -1) {
+                    tmp.adPurpose.push(adpurposes[j]);
+                    arr.push(tmp);
+                }
+                else {
+                    if (arr[index].adPurpose.indexOf(adpurposes[j]) == -1) arr[index].adPurpose.push(adpurposes[j]);
+                }
             }
             console.log('adPurpose', id);
             id++;
 
-        } while (response.items.length != 0);
+        }
     }
 }
 async function getAdTypeData(arr) {
     var adtypes = [57, 5, 30, 7, 16, 17, 25];
     for (let j = 0; j < adtypes.length; j++) {
         var id = 1;
-        do {
+        while (1) {
             var response = await getData(id, 0, 0, adtypes[j], 0);
+            if (response.items.length == 0) break;
             for (let i = 0; i < response.items.length; i++) {
-                modifyItem("adType", adtypes[j], response.items[i].id, arr);
+                var tmp = response.items[i];
+                tmp = Object.assign(tmp, {
+                    adCareer: [],
+                    adPurpose: [],
+                    adType: [],
+                    adBase: [],
+                })
+                var index = findById(tmp.id, arr);
+                if (index == -1) {
+                    tmp.adType.push(adtypes[j]);
+                    arr.push(tmp);
+                }
+                else {
+                    if (arr[index].adType.indexOf(adtypes[j]) == -1) arr[index].adType.push(adtypes[j]);
+                }
             }
             console.log('adType', id);
             id++;
 
-        } while (response.items.length != 0);
+        }
     }
 }
 async function getAdBaseData(arr) {
@@ -129,22 +147,34 @@ async function getAdBaseData(arr) {
     for (let j = 0; j < adbases.length; j++) {
 
         var id = 1;
-        do {
+        while (1) {
             var response = await getData(id, 0, 0, 0, adbases[j]);
+            if (response.items.length == 0) break;
             for (let i = 0; i < response.items.length; i++) {
-                modifyItem("adBase", adbases[j], response.items[i].id, arr);
+                var tmp = response.items[i];
+                tmp = Object.assign(tmp, {
+                    adCareer: [],
+                    adPurpose: [],
+                    adType: [],
+                    adBase: [],
+                })
+                var index = findById(tmp.id, arr);
+                if (index == -1) {
+                    tmp.adBase.push(adbases[j]);
+                    arr.push(tmp);
+                }
+                else {
+                    if (arr[index].adBase.indexOf(adbases[j]) == -1) arr[index].adBase.push(adbases[j]);
+                }
             }
             console.log('adBase', id);
             id++;
 
-        } while (response.items.length != 0);
+        }
     }
 }
 
-
-
 async function main() {
-    await getAdData(arr);
     await getAdCareerData(arr);
     await getAdPurposeData(arr);
     await getAdTypeData(arr);

@@ -1,8 +1,8 @@
 const env = {
-    user: 'root',
-    password: 'Hieu956230',
-    database: 'test',
-    host: 'localhost',
+    user: 'mkorhwfaxprrc57p',
+    password: 'd5oaflsk0tvdzux9',
+    database: 'heroku_2b35d7858d01da0',
+    host: 'us-east-1.rds.amazonaws.com',
     dialect: 'mysql',
     pool: {
         max: 5,
@@ -13,3 +13,4 @@ const env = {
 }
 
 module.exports = env;
+
