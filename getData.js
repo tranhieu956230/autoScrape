@@ -174,6 +174,12 @@ async function getAdBaseData(arr) {
     }
 }
 
+async function crawlDescription(path) {
+    return new Promise((resolve, reject) => {
+
+    })
+}
+
 async function main() {
     await getAdCareerData(arr);
     await getAdPurposeData(arr);
